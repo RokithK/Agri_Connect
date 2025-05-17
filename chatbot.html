@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriBot - Chatbot Assistance | Agri-Connect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chatbot.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById("user-input").value;
+            if (userInput.trim() === "") return;
+            
+            // Display the user's message immediately
+            var chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += "<p class='user-message'><strong>You:</strong> " + userInput + "</p>";
+            chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to the bottom
+
+            fetch("/chatbot-response", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatbox.innerHTML += "<p class='bot-message'><strong>AgriBot:</strong> " + data.response + "</p>";
+                chatbox.scrollTop = chatbox.scrollHeight; // Auto-scroll to the bottom
+                document.getElementById("user-input").value = ""; // Clear the input
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                chatbox.innerHTML += "<p class='bot-message error'><strong>AgriBot:</strong> Sorry, something went wrong. Please try again.</p>";
+                chatbox.scrollTop = chatbox.scrollHeight;
+            });
+        }
+
+        // Allow sending message on Enter key press
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById("user-input").addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-leaf"></i> Agri-Connect
+        </div>
+        <nav class="nav-links">
+            <a href="/hcrop">HCrop - Crop Price Prediction</a>
+            <a href="/hweather">HWeather - Crop Recommendation</a>
+            <a href="/chatbot">AgriBot - Chatbot Assistance</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h1><i class="fas fa-robot"></i> AgriBot - Chatbot Assistance</h1>
+            <p class="intro-text">Ask AgriBot anything about farming, crop prices, weather conditions, or best practices. Get instant, AI-powered answers to help you make smarter decisions!</p>
+            <div id="chatbox" class="chatbox"></div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Type your question here...">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i> Send</button>
+            </div>
+            <a href="/" class="btn">Return to Home</a>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <p>© 2025 Agri-Connect. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </footer>
+</body>
+</html>

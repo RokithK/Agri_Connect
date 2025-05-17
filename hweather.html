@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HWeather - Crop Recommendation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hweather.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Crop Recommendation</h1>
+        <form method="POST">
+            <label for="nitrogen">Nitrogen (N)</label>
+            <input type="number" id="nitrogen" name="nitrogen" required>
+            
+            <label for="phosphorus">Phosphorus (P)</label>
+            <input type="number" id="phosphorus" name="phosphorus" required>
+            
+            <label for="potassium">Potassium (K)</label>
+            <input type="number" id="potassium" name="potassium" required>
+            
+            <label for="temperature">Temperature (°C)</label>
+            <input type="number" id="temperature" name="temperature" required>
+            
+            <label for="humidity">Humidity (%)</label>
+            <input type="number" id="humidity" name="humidity" required>
+            
+            <label for="ph">pH Level</label>
+            <input type="number" id="ph" name="ph" required>
+            
+            <label for="rainfall">Rainfall (mm)</label>
+            <input type="number" id="rainfall" name="rainfall" required>
+            
+            <button type="submit">Predict Crop</button>
+        </form>
+
+        {% if recommended_crop %}
+        <h2>Recommended Crop: {{ recommended_crop }}</h2>
+        {% endif %}
+
+        <a href="/" class="btn">Return Home</a>
+    </div>
+</body>
+</html>
