@@ -3,7 +3,7 @@ import re
 
 class Chatbot:
     def __init__(self, crop_price_model=None, crop_rec_model=None, label_encoder=None, crop_price_data=None, crop_recommendation_data=None):
-        self.API_KEY = "AIzaSyDK_65-5M677JjChV-Ockv9v8HNpWExj4o"
+        #Place your API key
         genai.configure(api_key=self.API_KEY)
         self.model = genai.GenerativeModel("gemini-1.5-flash")
         
