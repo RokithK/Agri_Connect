@@ -50,7 +50,4 @@ AgriBot uses a **Generative AI model (Gemini/GPT)** to:
 3. **Chatbot**: Users can interact with AgriBot for personalized farming help
 4. **Response**: Results are displayed or sent back as chatbot responses (JSON)
 
----
-
-## 📁 Project Structure
 
